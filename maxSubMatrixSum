@@ -1,0 +1,59 @@
+/**
+*  it is a three cycle alghriom, the outer cycle is m and the the inner cycle is m*n. the complexity is O(m*m*n), in this
+* case , m is equal to n. so the time complexity is O(n^3). as get the max sum of one subarray use the dynamic programming
+* algorithm. So you should first learn the algorithm of maxSubArray.
+*/
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int matrix[102][102];
+int maxSubArray(int *a,int n);
+
+int main()
+{
+	int n,i,j,k,l,sum,tmp;
+	int b2[102];
+	while(cin>>n)
+	{
+		for(i=0;i<n;i++)
+		{
+			for(j=0;j<n;j++)
+			{
+				cin>>matrix[i][j];
+			}
+		}
+		sum = maxSubArray(matrix[0],n);
+		for(i=0;i<n;i++)
+		{
+			for(j=0;j<n;j++)
+			{
+				b2[j] = 0;
+			}
+			for(j=i;j<n;j++)
+			{
+				for(k=0;k<n;k++)
+				{
+					b2[k] += matrix[j][k];
+				}
+				tmp = maxSubArray(b2,n);
+				sum = sum>tmp?sum:tmp;
+			}
+		}
+		cout<<sum<<endl;
+	}
+	return 0;
+}
+
+int maxSubArray(int *a,int n)
+{
+	int i,sum=a[0],b=a[0];
+	
+	for(i=1;i<n;i++)
+	{
+		b = b+a[i]>a[i]?b+a[i]:a[i];
+		sum = sum>b?sum:b;
+	}
+	return sum;
+}
+
